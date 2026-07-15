@@ -1,0 +1,23 @@
+{
+  "name": "HackRate",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+  // Install deps once when the Codespace is created, then start the server
+  // every time you attach. The forwarded port becomes your shareable link.
+  "postCreateCommand": "npm install",
+  "postAttachCommand": "npm start",
+
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "HackRate",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  }
+}

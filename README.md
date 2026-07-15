@@ -72,6 +72,26 @@ MISTRAL_API_KEY=...
 ```
 Optional: `PORT`, `CALL_TIMEOUT_MS`, `MAX_CRAWL_PAGES`.
 
+## Run it from GitHub (Codespaces)
+
+HackRate is a Node server, so GitHub **Pages** can't run it (Pages is static-only, and
+your keys must stay server-side). GitHub **Codespaces** runs the whole app in the cloud and
+gives you a shareable link. This repo ships a `.devcontainer/` so it auto-installs and starts.
+
+1. **Add your keys as Codespaces secrets** (so they never touch the repo):
+   GitHub → this repo → **Settings → Secrets and variables → Codespaces → New repository secret**.
+   Add each of: `GROQ_API_KEY`, `OPEN_ROUTE_API_KEY`, `CEREBRAL_API_KEY`, `MISTRAL_API_KEY`.
+   Codespaces injects them as environment variables — the app reads `process.env` directly.
+2. **Open a Codespace**: green **Code** button → **Codespaces** → **Create codespace on main**.
+   It runs `npm install`, then `npm start` automatically.
+3. **Get the link**: when port **3000** forwards, open the **Ports** tab, and (to share it)
+   right-click port 3000 → **Port Visibility → Public**. That forwarded URL
+   (`https://<name>-3000.app.github.dev`) is your live site.
+
+> The Codespace only serves while it's running (it sleeps when you close it), and the URL is
+> temporary. For a permanent 24/7 link, deploy the same repo to a Node host (Render, Railway,
+> Fly.io) and set the four keys as env vars there — no code change needed.
+
 ## Architecture
 
 ```
