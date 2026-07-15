@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackRate — the before-you-build check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">hackrate<span class="dot">.</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/#how">HOW IT WORKS</a>
+        <a href="/#judges">THE JUDGES</a>
+      </nav>
+      <a class="btn-ghost header-cta" href="/">HOME</a>
+    </div>
+  </header>
+
+  <main class="page-narrow quiz-page">
+    <p class="quiz-eyebrow" id="quizEyebrow">THE BEFORE-YOU-BUILD CHECK</p>
+
+    <div class="quiz-top">
+      <div class="quiz-meta">
+        <span id="stepCount">1 / 5</span>
+        <span id="modeTag">IDEA CHECK</span>
+      </div>
+      <div class="quiz-progress"><div class="quiz-bar" id="quizBar"></div></div>
+      <p class="quiz-switch" id="quizSwitch"></p>
+    </div>
+
+    <form class="quiz" id="quizForm" autocomplete="off">
+      <div class="quiz-steps" id="quizSteps"><!-- steps injected by rate.js --></div>
+      <div class="quiz-nav">
+        <button type="button" class="btn-ghost invisible" id="backBtn">← BACK</button>
+        <p class="form-error" id="formError"></p>
+        <button type="button" class="btn-primary" id="nextBtn">NEXT →</button>
+      </div>
+      <p class="enter-tip" id="enterTip">Press Enter to continue</p>
+    </form>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/rate.js"></script>
+</body>
+</html>

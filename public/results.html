@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackRate — the verdict</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">hackrate<span class="dot">.</span></span>
+      </a>
+      <nav class="nav-links"></nav>
+      <a class="btn-ghost header-cta" href="/rate">NEW RATING</a>
+    </div>
+  </header>
+
+  <main class="results-page">
+    <a class="back-link" href="/rate">← rate another</a>
+
+    <div class="judging-head">
+      <div class="what" id="whatLabel">JUDGING YOUR IDEA</div>
+      <div class="subject" id="subject">—</div>
+    </div>
+
+    <!-- live per-API status -->
+    <div class="status-row" id="statusRow"></div>
+    <div class="stage-note" id="stageNote">Warming up the judges…</div>
+
+    <!-- results render here -->
+    <div id="results"></div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>

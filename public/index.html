@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackRate — rate your hackathon idea before you build</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">hackrate<span class="dot">.</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#how">HOW IT WORKS</a>
+        <a href="#judges">THE JUDGES</a>
+        <a href="#rubric">RUBRIC</a>
+        <a href="#dispute">DISPUTES</a>
+      </nav>
+      <a class="btn-ghost header-cta" href="/rate">RATE NOW</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h1>
+          <span class="bold">RATE YOUR</span>
+          <span class="serif">hackathon</span>
+          <span class="bold">IDEA</span>
+        </h1>
+        <p class="lede">
+          Before you burn 36 hours building, run your idea past four independent AI judges —
+          each with a different job. HackRate scores it against <em>your</em> hackathon's
+          criteria and hands back one honest rating out of 10, plus the exact gaps worth fixing.
+        </p>
+        <div class="hero-cta-row">
+          <a class="btn-primary" href="/rate">RATE AN IDEA →</a>
+          <a class="btn-ghost" href="/rate?mode=project">REVIEW A BUILD</a>
+        </div>
+      </div>
+
+      <div class="sky-box">
+        <div class="sky">
+          <div class="cloud c1"></div>
+          <div class="cloud c2"></div>
+          <div class="cloud c3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="marquee-wrap">
+      <p class="strip-label">POWERED BY 4 INDEPENDENT AI MODELS</p>
+      <div class="marquee" id="marquee"></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <p class="eyebrow">HOW IT WORKS</p>
+      <h2>Three steps, <span class="serif">no fluff</span></h2>
+      <p class="sub">You describe the idea and the hackathon's criteria. HackRate does the rest — in about a minute.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Describe it</h3>
+          <p>Paste your idea in plain text, or the URL of your finished build. Add the hackathon's judging criteria so the scoring reflects what actually wins.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Five judges deliberate</h3>
+          <p>Four AI models score the idea against a hackathon rubric in parallel — you watch each one finish live.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Act on the verdict</h3>
+          <p>Get one weighted score out of 10, a category breakdown, merged strengths and gaps — and dispute anything a judge got wrong.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JUDGES -->
+  <section class="section alt" id="judges">
+    <div class="wrap">
+      <p class="eyebrow">THE PANEL</p>
+      <h2>Four judges who <span class="serif">disagree</span> on purpose</h2>
+      <p class="sub">Different models with different training and different jobs. They catch what a single opinion misses, then their scores are aggregated deterministically.</p>
+      <div class="judges-grid">
+        <div class="judge-card">
+          <span class="prov">GROQ · LLAMA 3.3 70B</span>
+          <h3><span class="role-dot" style="background:#2f6df6"></span>Speed Judge</h3>
+          <p>Blunt, fast feasibility and scope checks. Is this actually buildable in the time you have?</p>
+        </div>
+        <div class="judge-card">
+          <span class="prov">OPENROUTER · ROTATING</span>
+          <h3><span class="role-dot" style="background:#14b8a6"></span>Variety Judge</h3>
+          <p>Different training data catches novelty and "this has been done before" cases the others miss.</p>
+        </div>
+        <div class="judge-card">
+          <span class="prov">CEREBRAS</span>
+          <h3><span class="role-dot" style="background:#e08a3c"></span>Throughput Judge</h3>
+          <p>A second opinion on technical difficulty, scope realism, and how brittle your dependencies are.</p>
+        </div>
+        <div class="judge-card">
+          <span class="prov">MISTRAL</span>
+          <h3><span class="role-dot" style="background:#8b5cf6"></span>Depth Judge</h3>
+          <p>Structured reasoning about how the idea is written — ambiguity, underspecification, hidden assumptions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IDEA-LEVEL RUBRIC -->
+  <section class="section" id="rubric">
+    <div class="wrap feature-split">
+      <div>
+        <p class="eyebrow">IDEA-LEVEL SCORING</p>
+        <h2>Judges the <span class="serif">idea</span> — not your code</h2>
+        <p class="sub">HackRate is for the "before you build" check. It scores whether the concept would actually work — is it real, novel, useful, buildable and demo-able in a hackathon — and never nitpicks implementation you haven't written. Give it the hackathon's criteria and it also rates how well the idea fits.</p>
+        <a class="btn-primary" href="/rate">TRY IT →</a>
+      </div>
+      <div class="feature-visual">
+        <div class="dim-row"><div class="dim-head"><span class="n">Criteria Fit <span class="w">W3</span></span><span class="v">9/10</span></div><div class="dim-track"><div class="dim-fill" style="width:90%;background:#14b8a6"></div></div></div>
+        <div class="dim-row"><div class="dim-head"><span class="n">Feasibility in Time <span class="w">W3</span></span><span class="v">6/10</span></div><div class="dim-track"><div class="dim-fill" style="width:60%;background:#2f6df6"></div></div></div>
+        <div class="dim-row"><div class="dim-head"><span class="n">Novelty <span class="w">W2</span></span><span class="v">7/10</span></div><div class="dim-track"><div class="dim-fill" style="width:70%;background:#2f6df6"></div></div></div>
+        <div class="dim-row"><div class="dim-head"><span class="n">Demo-ability <span class="w">W3</span></span><span class="v">8/10</span></div><div class="dim-track"><div class="dim-fill" style="width:80%;background:#14b8a6"></div></div></div>
+        <p class="dim-desc" style="margin-top:16px">↑ A fixed, idea-level rubric — plus a Criteria Fit score for your hackathon's theme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISPUTE -->
+  <section class="section alt" id="dispute">
+    <div class="wrap feature-split">
+      <div class="feature-visual">
+        <div class="mock-gap">
+          <span class="marker">▸</span>
+          <span class="txt">"Relies on a paid weather API with a low free-tier limit."</span>
+          <span class="dispute-pill">DISPUTE</span>
+        </div>
+        <div class="mock-gap">
+          <span class="marker">▸</span>
+          <span class="txt">"The onboarding flow described in the pitch isn't implemented."</span>
+          <span class="dispute-pill">DISPUTE</span>
+        </div>
+        <p class="dim-desc" style="margin-top:6px">Hover any flagged problem → <b>Dispute</b> appears.</p>
+      </div>
+      <div>
+        <p class="eyebrow">DISAGREE? DISPUTE IT.</p>
+        <h2>The AI can be <span class="serif">wrong</span></h2>
+        <p class="sub">Maybe a judge misread your site and flagged a feature that's actually on another page. Hover any problem, hit <b>Dispute</b>, and tell it why — a reasoning model re-reads your project and rules the flag <b>withdrawn</b>, <b>revised</b>, or <b>upheld</b>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Find the holes <span class="serif">tonight</span>,<br>not at the demo.</h2>
+      <a class="btn-primary" href="/rate">RATE YOUR IDEA →</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">hackrate<span class="dot">.</span></span>
+      </a>
+      <span class="copy">© 2026 HackRate · runs on free-tier LLMs · localhost build</span>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackRate — dispute a flag</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">hackrate<span class="dot">.</span></span>
+      </a>
+      <nav class="nav-links"></nav>
+      <a class="btn-ghost header-cta" href="/results">← BACK TO RESULTS</a>
+    </div>
+  </header>
+
+  <main class="page-narrow">
+    <a class="back-link" href="/results">← back to results</a>
+    <h1 class="page-title">Dispute a <span class="serif">flag</span></h1>
+    <p class="page-intro">Think a judge got this wrong or misread your project? Make your case — a reasoning model re-reads the project and rules honestly.</p>
+
+    <div class="dispute-card">
+      <div class="flagged">
+        <span class="lbl">FLAGGED PROBLEM</span>
+        <span id="gapText">—</span>
+      </div>
+
+      <form id="disputeForm">
+        <div class="field">
+          <label for="argInput">WHY IS THIS WRONG?</label>
+          <textarea id="argInput" rows="5" placeholder="e.g. 'That feature IS implemented — it's on the /dashboard page, not the landing page.' or 'The criteria say monetization is out of scope.'"></textarea>
+        </div>
+        <p class="form-error" id="formError"></p>
+        <button type="submit" class="btn-primary" id="submitBtn">SUBMIT DISPUTE →</button>
+      </form>
+
+      <div id="ruling"></div>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/dispute.js"></script>
+</body>
+</html>

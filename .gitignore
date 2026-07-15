@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# secrets — never commit your API keys
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
