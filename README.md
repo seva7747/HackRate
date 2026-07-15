@@ -89,8 +89,25 @@ gives you a shareable link. This repo ships a `.devcontainer/` so it auto-instal
    (`https://<name>-3000.app.github.dev`) is your live site.
 
 > The Codespace only serves while it's running (it sleeps when you close it), and the URL is
-> temporary. For a permanent 24/7 link, deploy the same repo to a Node host (Render, Railway,
-> Fly.io) and set the four keys as env vars there — no code change needed.
+> temporary. For a permanent 24/7 link, use Render below.
+
+## Deploy free with a permanent URL (Render)
+
+Free, no credit card, permanent link like `https://hackrate.onrender.com`. This repo ships a
+`render.yaml` blueprint so it's basically one click.
+
+1. Go to **[render.com](https://render.com)** → sign up with GitHub.
+2. **New +** → **Blueprint** → pick the **seva7747/HackRate** repo. Render reads `render.yaml`.
+3. When prompted, paste the values for the 4 keys (`GROQ_API_KEY`, `OPEN_ROUTE_API_KEY`,
+   `CEREBRAL_API_KEY`, `MISTRAL_API_KEY`) — they live in Render, never in the repo.
+4. **Apply** → wait ~2 min for the build. Your URL appears at the top of the service page.
+
+Every `git push` to `main` redeploys automatically.
+
+**Keeping it awake (free):** Render's free tier spins the service down after ~15 min idle, so
+the first visit after a nap takes ~30–60s to wake. To keep it warm 24/7 for free, add a free
+uptime monitor (e.g. **uptimerobot.com**) that pings your Render URL every 5 minutes. One
+always-on free web service fits within Render's monthly free hours.
 
 ## Architecture
 

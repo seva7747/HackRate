@@ -1,0 +1,20 @@
+# Render blueprint — lets you deploy HackRate in one click.
+# In Render: New + -> Blueprint -> connect the seva7747/HackRate repo.
+# Render reads this file, then prompts you to paste the 4 API key values
+# (they are NOT stored in the repo; sync:false = "ask me in the dashboard").
+services:
+  - type: web
+    name: hackrate
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPEN_ROUTE_API_KEY
+        sync: false
+      - key: CEREBRAL_API_KEY
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
