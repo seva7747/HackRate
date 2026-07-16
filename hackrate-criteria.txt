@@ -1,0 +1,14 @@
+Replace everything in this file with your hackathon's judging criteria / theme.
+
+The HackRate PR Reviewer reads this file on every pull request and scores your
+changes against it (the "Criteria Fit" score). One repo = one hackathon, so the
+criteria travels with the project. Change hackathons? Just edit this file.
+
+If you delete the text and leave it blank, HackRate falls back to scoring on
+general hackathon fundamentals (would the idea work, is it novel, useful,
+buildable, demo-able).
+
+--- example (delete these lines and write your own) ---
+Theme: Best use of AI for education.
+We reward: a clear real problem, a genuinely useful solution for students or
+teachers, something demo-able in 3 minutes, and novelty over existing tools.
