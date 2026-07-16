@@ -1,14 +1,8 @@
-Replace everything in this file with your hackathon's judging criteria / theme.
+Theme: For social good.
 
-The HackRate PR Reviewer reads this file on every pull request and scores your
-changes against it (the "Criteria Fit" score). One repo = one hackathon, so the
-criteria travels with the project. Change hackathons? Just edit this file.
-
-If you delete the text and leave it blank, HackRate falls back to scoring on
-general hackathon fundamentals (would the idea work, is it novel, useful,
-buildable, demo-able).
-
---- example (delete these lines and write your own) ---
-Theme: Best use of AI for education.
-We reward: a clear real problem, a genuinely useful solution for students or
-teachers, something demo-able in 3 minutes, and novelty over existing tools.
+Reward ideas that create a real, positive impact on people, communities, or the
+planet — solving a genuine problem for an underserved or affected group. Favor
+solutions that are useful, clearly benefit others (not just the builder), and
+could realistically help if they existed. Novelty and demo-ability still matter,
+but the core question is: does this make life meaningfully better for someone who
+needs it?
