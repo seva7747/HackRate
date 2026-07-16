@@ -6,6 +6,7 @@ import {
   buildPrMessages,
   buildMetaMessages,
   buildDisputeMessages,
+  buildFixMessages,
   extractJson,
 } from "./prompts.js";
 import { normalizeJudge, aggregate } from "./aggregate.js";
@@ -123,6 +124,19 @@ function heuristicVerdict(mode, agg) {
   else band = "Needs significant work";
   const tail = topGap ? ` — biggest issue: ${topGap.replace(/\.$/, "")}.` : ".";
   return { verdict: `${band} (${s}/10)${tail}`, topPriority: topGap };
+}
+
+/** Fixer — suggest a concrete fix for one flagged gap, grounded in the code. */
+export async function suggestFix({ gap, criteria, files }) {
+  const { text, provider } = await callReasoning(buildFixMessages({ gap, criteria, files }), { temperature: 0.3 });
+  const parsed = extractJson(text);
+  return {
+    summary: String(parsed.summary || "").trim() || "No suggestion returned.",
+    steps: Array.isArray(parsed.steps) ? parsed.steps.filter((s) => typeof s === "string" && s.trim()).map((s) => s.trim()) : [],
+    file: parsed.file ? String(parsed.file).trim() : null,
+    codeSketch: parsed.codeSketch ? String(parsed.codeSketch).trim() : null,
+    source: provider,
+  };
 }
 
 /** Adjudicate a user's dispute of a single flagged gap. */

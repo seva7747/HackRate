@@ -222,6 +222,43 @@ THE USER'S DISPUTE:
   ];
 }
 
+/** Fixer — given ONE flagged gap + the relevant code, suggest a concrete fix. */
+export function buildFixMessages({ gap, criteria, files }) {
+  const criteriaLine = criteria && criteria.trim()
+    ? `The hackathon's criteria / theme: "${criteria.trim()}". A good fix moves the work toward THAT.`
+    : `No specific criteria were given — aim the fix at general hackathon-worthiness.`;
+
+  const codeBlock = Array.isArray(files) && files.length
+    ? files.map((f) => `=== FILE: ${f.filename || f.path || "file"} ===\n${(f.content || f.patch || f.text || "").toString()}`).join("\n\n").slice(0, 10000)
+    : "(no code provided — give idea-level guidance and a small illustrative sketch)";
+
+  const system = `You are HackRate's "Fixer". A judge flagged ONE problem about a hackathon project, and a planner turned it into a task. Your job: tell the builder concretely HOW to fix it.
+
+${criteriaLine}
+
+RULES:
+- Focus on making the work serve the IDEA and the criteria — NOT code hygiene. Never suggest "add tests", "add error handling", "add input validation", "add docs" as the fix unless that is literally the flagged problem.
+- Be concrete and short. Give a specific action, and when code genuinely helps, a SMALL sketch (a few lines), not a full file.
+- If the real fix is conceptual (e.g. reframe the feature to serve the theme), say that plainly instead of forcing code.
+- Point at which file/area to change if the code makes it clear.
+
+Output ONLY this JSON:
+{"summary":"<one sentence: what to do>","steps":["<step>","<step>"],"file":"<file to change or null>","codeSketch":"<a few lines of example code, or null>"}`;
+
+  const user = `THE FLAGGED PROBLEM (the task to fix):
+"${gap}"
+
+RELEVANT CODE:
+"""
+${codeBlock}
+"""`;
+
+  return [
+    { role: "system", content: system },
+    { role: "user", content: user },
+  ];
+}
+
 /** Robustly pull a JSON object out of a model response (strips ``` fences). */
 export function extractJson(raw) {
   if (typeof raw !== "string") throw new Error("no text to parse");

@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { PORT, JUDGES, PROVIDERS, REASONING_CHAIN } from "./src/config.js";
-import { runPanel, adjudicateDispute } from "./src/judges.js";
+import { runPanel, adjudicateDispute, suggestFix } from "./src/judges.js";
 import { scrapeSite } from "./src/scrape.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -147,6 +147,25 @@ app.post("/api/review-pr", async (req, res) => {
     });
   } catch (err) {
     console.error("review-pr failed:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ---- Fixer: suggest how to fix one flagged gap (called by the Fixer agent) --
+// Non-streaming JSON. Takes one gap (a task Max created) + optional code + the
+// criteria, and returns a concrete, idea-focused fix suggestion the agent can
+// post as a comment on the GitHub issue.
+app.post("/api/suggest-fix", async (req, res) => {
+  const gap = (req.body?.gap || "").toString().trim();
+  const criteria = (req.body?.criteria || "").toString().trim();
+  const files = Array.isArray(req.body?.files) ? req.body.files : [];
+  if (gap.length < 3) return res.status(400).json({ error: "Provide the flagged problem text as `gap`." });
+
+  try {
+    const fix = await suggestFix({ gap, criteria, files });
+    res.json(fix);
+  } catch (err) {
+    console.error("suggest-fix failed:", err);
     res.status(500).json({ error: err.message });
   }
 });
