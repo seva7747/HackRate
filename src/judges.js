@@ -3,6 +3,7 @@ import { callModel, callReasoning } from "./callModel.js";
 import {
   buildIdeaMessages,
   buildProjectMessages,
+  buildPrMessages,
   buildMetaMessages,
   buildDisputeMessages,
   extractJson,
@@ -54,7 +55,9 @@ export async function runPanel(mode, input, hooks = {}) {
     JUDGES.map((judge) => {
       onStart({ id: judge.id, title: judge.title });
       const messages =
-        mode === "project"
+        mode === "pr"
+          ? buildPrMessages(judge, { ...input, dimensions })
+          : mode === "project"
           ? buildProjectMessages(judge, { ...input, dimensions })
           : buildIdeaMessages(judge, { ...input, dimensions, criteriaSummary });
       return runOneJudge(judge, messages, dimensions, log).then((r) => {

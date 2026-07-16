@@ -105,9 +105,64 @@ ${pages.map((p) => `=== PAGE: ${p.url} ===\n${p.text}`).join("\n\n").slice(0, 14
   ];
 }
 
+/** PR review — a single pull request (a small code change), NOT the whole project. */
+export function buildPrMessages(judge, { criteria, prTitle, pages, dimensions }) {
+  const criteriaLine = criteria && criteria.trim()
+    ? `The hackathon's criteria / theme: "${criteria.trim()}"\nScore "criteria_fit" by whether THIS change moves the project toward THAT.`
+    : `No specific criteria were given — score "criteria_fit" on general hackathon-worthiness.`;
+
+  const system = `You are the "${judge.title}" on HackRate, reviewing ONE pull request — a small, partial code change — for a hackathon project. You are NOT reviewing a finished product.
+
+Your judging specialty: ${judge.focus}.
+
+${criteriaLine}
+
+CRITICAL — this is a DIFF, not the whole project:
+- You are shown only the CHANGED files in this pull request. This is a small slice of a larger, unfinished project. Most of the product is NOT in front of you.
+- Do NOT flag things that are simply absent because this is only a diff: "no UI", "no demo", "no target user described", "not a full product", "no screenshots", "missing features" unrelated to this change. A pull request is EXPECTED to be small and partial. Faulting it for not being the whole product is wrong.
+- Only raise a gap if it is a REAL problem with THIS change itself, or a CLEAR conflict between this change and the hackathon criteria.
+- Do NOT flag code-level nitpicks: missing error handling, input validation, type checks, "no tests", "no documentation", edge cases, naming. HackRate judges whether the work serves the IDEA and the criteria — not code hygiene. The ONLY tech exception is a change that depends on something that doesn't exist or is prohibitively expensive.
+- For dimensions a small diff genuinely cannot demonstrate (e.g. demo_ability, target_user_clarity, wow_factor, market_precedent), do NOT punish the change — score them neutral (6-7) unless the change actively harms them.
+
+Score this change on these dimensions (each 1-10, 10 = best):
+${dimensionBlock(dimensions)}
+
+Return EXACTLY this JSON shape (keep "judge" as "${judge.id}"):
+${schemaExample(judge.id, dimensions)}
+
+OUTPUT RULES:
+- Output ONLY a single JSON object. No markdown, no code fences, no prose.
+- Score EVERY dimension key. Every score is an INTEGER 1-10. For risk dimensions, 10 = no issue.
+- "gaps": AT MOST 3 entries, the single most important problems with THIS change only. Fewer is better. An empty array is correct if the change is fine. Do NOT pad the list.
+- "shines": 1-2 concrete strengths (empty array ok).
+- Be honest and calibrated; judge the change, not the absence of the rest of the project.`;
+
+  const files = pages
+    .map((p) => `=== FILE: ${p.url} ===\n${p.text}`)
+    .join("\n\n")
+    .slice(0, 12000);
+
+  const user = `PULL REQUEST${prTitle ? `: ${prTitle}` : ""}
+
+CHANGED FILES (the diff for this PR):
+"""
+${files}
+"""`;
+
+  return [
+    { role: "system", content: system },
+    { role: "user", content: user },
+  ];
+}
+
 /** Meta verdict — reads the aggregate + judges' notes, writes one verdict line. */
 export function buildMetaMessages({ mode, aggregate, judgeSummaries, originalIdea, url, criteriaSummary }) {
-  const context = mode === "project" ? `Review of a FINISHED project at ${url}.` : `Review of a hackathon IDEA (before building).`;
+  const context =
+    mode === "pr"
+      ? `Review of a single PULL REQUEST (a small code change), not the whole project.`
+      : mode === "project"
+      ? `Review of a FINISHED project at ${url}.`
+      : `Review of a hackathon IDEA (before building).`;
   const system = `You are the summarizing voice of HackRate. Judges already scored independently and the scores are aggregated deterministically. Do NOT re-score.
 
 Read the aggregate and the judges' notes, then write ONE tight, actionable verdict line (max ~25 words) about whether the IDEA would work. Be specific and honest. Focus on the idea, not code.

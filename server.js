@@ -129,19 +129,20 @@ app.post("/api/review-pr", async (req, res) => {
   const log = (msg) => console.log(msg);
   try {
     const agg = await runPanel(
-      "project",
-      { url: prTitle ? `PR: ${prTitle}` : "pull request", originalIdea, criteria, pages: usable },
+      "pr",
+      { prTitle, originalIdea, criteria, pages: usable },
       { log }
     );
 
     // Compact, comment/email-friendly payload. `score` and `criteriaFit` are /10.
+    // Cap gaps so one PR can't spawn a wall of near-duplicate issues downstream.
     res.json({
       score: agg.overall,
       criteriaFit: agg.dimensionAverages?.criteria_fit ?? null,
       verdict: agg.verdict || null,
       topPriority: agg.topPriority || null,
-      gaps: agg.gaps || [],
-      shines: agg.shines || [],
+      gaps: (agg.gaps || []).slice(0, 6),
+      shines: (agg.shines || []).slice(0, 4),
       judges: agg.judges?.responded || [],
     });
   } catch (err) {
