@@ -138,3 +138,5 @@ Free model catalogs churn. Each provider has an ordered fallback list in
 [src/config.js](src/config.js); if the first model 404s or rate-limits, the caller tries the
 next. Re-verify live names by hitting each provider's `/v1/models`. `.env` is git-ignored —
 don't commit keys.
+
+<!-- full three-agent team test 133711 -->
