@@ -104,6 +104,52 @@ app.post("/api/review-project", async (req, res) => {
   }
 });
 
+// ---- PR review: called by an external agent (Kylon) on each pull request ----
+// Non-streaming, plain JSON in / plain JSON out, so a webhook workflow can POST
+// the changed files + criteria and drop the result straight into a PR comment
+// or an email. This judges the DIFF the same way Part 2 judges a built project:
+// does the change fit the criteria and is it actually useful — not code nitpicks.
+app.post("/api/review-pr", async (req, res) => {
+  const files = Array.isArray(req.body?.files) ? req.body.files : [];
+  const criteria = (req.body?.criteria || "").toString().trim();
+  const originalIdea = (req.body?.originalIdea || "").toString().trim();
+  const prTitle = (req.body?.prTitle || "").toString().trim();
+
+  const usable = files
+    .filter((f) => f && (f.patch || f.text))
+    .map((f) => ({
+      url: (f.filename || f.path || "file").toString(),
+      title: (f.filename || f.path || "file").toString(),
+      text: (f.patch || f.text || "").toString(),
+    }));
+  if (!usable.length) {
+    return res.status(400).json({ error: "Provide `files: [{ filename, patch }]` with at least one changed file." });
+  }
+
+  const log = (msg) => console.log(msg);
+  try {
+    const agg = await runPanel(
+      "project",
+      { url: prTitle ? `PR: ${prTitle}` : "pull request", originalIdea, criteria, pages: usable },
+      { log }
+    );
+
+    // Compact, comment/email-friendly payload. `score` and `criteriaFit` are /10.
+    res.json({
+      score: agg.overall,
+      criteriaFit: agg.dimensionAverages?.criteria_fit ?? null,
+      verdict: agg.verdict || null,
+      topPriority: agg.topPriority || null,
+      gaps: agg.gaps || [],
+      shines: agg.shines || [],
+      judges: agg.judges?.responded || [],
+    });
+  } catch (err) {
+    console.error("review-pr failed:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ---- Dispute: user contests a single flagged problem ------------------------
 app.post("/api/dispute", async (req, res) => {
   const reviewId = (req.body?.reviewId || "").toString().trim();
